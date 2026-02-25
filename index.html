@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyFootball Pro - AI Prediction</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">MyFootball</div>
+        <div class="auth-box">
+            <button id="themeToggle" onclick="toggleDarkMode()"></button>
+            <button id="loginBtn" onclick="handleLogin()">Login</button>
+            <button id="adminBtn" style="display:none;" onclick="toggleAdminPanel()">Admin</button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="adminPanel" class="admin-section" style="display:none;">
+            <h3>Post တင်ရန်</h3>
+            <input type="text" id="postTitle" placeholder="ခေါင်းစဉ်">
+            <textarea id="postContent" rows="4" placeholder="အသေးစိတ်ရေးရန်..."></textarea>
+            <button class="post-btn" onclick="uploadPost()">Publish Now</button>
+        </section>
+
+        <h2 class="section-title">AI Predictions (Today)</h2>
+        <div id="apiMatchContainer" class="match-list">
+            <p class="loading">ပွဲစဉ်များ ရှာဖွေနေသည်...</p>
+        </div>
+
+        <h2 class="section-title">Admin's Analysis</h2>
+        <div id="postContainer" class="post-list">
+            <p class="loading">Post များ ဆွဲယူနေသည်...</p>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active"><br>Home</div>
+        <div class="nav-item"><br>Analysis</div>
+        <div class="nav-item"><br>Setting</div>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
