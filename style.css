@@ -1,0 +1,107 @@
+:root {
+    --bg: #f4f4f4;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --primary: #d32f2f;
+    --subtext: #666666;
+}
+
+.dark-mode {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #f4f4f4;
+    --subtext: #bbbbbb;
+}
+
+body { 
+    background-color: var(--bg); 
+    color: var(--text); 
+    font-family: 'Segoe UI', sans-serif; 
+    margin: 0; 
+    transition: 0.3s;
+    padding-bottom: 70px;
+}
+
+.header {
+    background: var(--primary); color: white;
+    padding: 15px; display: flex; justify-content: space-between; align-items: center;
+}
+
+.match-card, .post-card, .admin-section {
+    background: var(--card); 
+    margin-bottom: 12px; 
+    padding: 15px; 
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.section-title { padding: 10px; font-size: 1.2rem; }
+.sub-info { color: var(--subtext); font-size: 12px; }
+
+#themeToggle {
+    background: rgba(255,255,255,0.2);
+    border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-right: 5px;
+}
+
+.bottom-nav {
+    position: fixed; bottom: 0; width: 100%; 
+    background: var(--card); border-top: 1px solid #444;
+    display: flex; justify-content: space-around; padding: 12px 0;
+}
+
+.nav-item { color: var(--subtext); text-align: center; font-size: 12px; }
+.nav-item.active { color: var(--primary); font-weight: bold; }
+
+input, textarea {
+    background: var(--bg); color: var(--text);
+    border: 1px solid #444; width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
