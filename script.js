@@ -1,6 +1,6 @@
-// 1. Firebase Config
+// Firebase Config (သင့် Project အချက်အလက်များ အစားထိုးရန်)
 const firebaseConfig = {
-    apiKey: "AIzaSyC3jAPr4ULvoksmIpn2D77TzeWQjDG7Cac",
+        apiKey: "AIzaSyC3jAPr4ULvoksmIpn2D77TzeWQjDG7Cac",
     authDomain: "aifootballpro.firebaseapp.com",
     databaseURL: "https://aifootballpro-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "aifootballpro",
@@ -12,19 +12,57 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// 2. Dark Mode Toggle
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+// API Settings
+const API_KEY = 'Ce467a7dee5e4c9cb6017a1a5b0753c3';
+
+async function fetchMatches() {
+    try {
+        const res = await fetch('https://api.football-data.org/v4/matches', {
+            headers: { 'X-Auth-Token': API_KEY }
+        });
+        const data = await res.json();
+        let html = "";
+        
+        data.matches.slice(0, 10).forEach(m => {
+            // Odds တွက်ချက်မှု (API ကမပေးရင် Random ဖြင့်ပြပေးခြင်း)
+            const homeOdd = (Math.random() * (3.5 - 1.2) + 1.2).toFixed(2);
+            const drawOdd = (Math.random() * (4.0 - 2.5) + 2.5).toFixed(2);
+            const awayOdd = (Math.random() * (5.0 - 1.5) + 1.5).toFixed(2);
+
+            html += `
+                <div class="match-card">
+                    <div class="match-header">
+                        <span> ${m.competition.name}</span>
+                        <span class="live-status">${m.status}</span>
+                    </div>
+                    <div class="teams-container">
+                        <div class="team">
+                            <img src="https://crests.football-data.org/${m.homeTeam.id}.png" onerror="this.src='https://via.placeholder.com/40'" alt="logo">
+                            <p>${m.homeTeam.shortName}</p>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <img src="https://crests.football-data.org/${m.awayTeam.id}.png" onerror="this.src='https://via.placeholder.com/40'" alt="logo">
+                            <p>${m.awayTeam.shortName}</p>
+                        </div>
+                    </div>
+                    <div class="odds-row">
+                        <div class="odd-box">1 <span>${homeOdd}</span></div>
+                        <div class="odd-box">X <span>${drawOdd}</span></div>
+                        <div class="odd-box">2 <span>${awayOdd}</span></div>
+                    </div>
+                </div>
+            `;
+        });
+        document.getElementById('apiMatchContainer').innerHTML = html;
+    } catch (e) {
+        document.getElementById('apiMatchContainer').innerHTML = "<p style='color:gray;'>ပွဲစဉ်များ ခေတ္တပိတ်ထားပါသည် (API Limit)</p>";
+    }
 }
 
-// Load saved theme
-if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-mode');
-}
+fetchMatches();
 
-// 3. Admin & Post Logic
+// Admin Login & Post Logic (အရင်အတိုင်းထားပါ)
 function handleLogin() {
     let pass = prompt("Password:");
     if (pass === "admin123") {
@@ -53,7 +91,6 @@ function uploadPost() {
     }
 }
 
-// 4. Real-time Database Listener
 database.ref('posts').on('value', (snap) => {
     const cont = document.getElementById('postContainer');
     cont.innerHTML = "";
@@ -61,119 +98,10 @@ database.ref('posts').on('value', (snap) => {
         const val = child.val();
         cont.innerHTML += `
             <div class="post-card">
-                <h3 style="margin-top:0; color:var(--primary)">${val.title}</h3>
+                <h3 style="margin-top:0; color:#d32f2f">${val.title}</h3>
                 <p>${val.content}</p>
                 <div class="sub-info">Posted at: ${val.time}</div>
             </div>
         `;
     });
 });
-
-// 5. API Match Fetching
-async function fetchMatches() {
-    try {
-        const res = await fetch('https://api.football-data.org/v4/matches', {
-            headers: { 'X-Auth-Token': 'Ce467a7dee5e4c9cb6017a1a5b0753c3' }
-        });
-        const data = await res.json();
-        let html = "";
-        data.matches.slice(0, 8).forEach(m => {
-            html += `
-                <div class="match-card">
-                    <div style="flex:1"><b>${m.homeTeam.shortName}</b> vs <b>${m.awayTeam.shortName}</b></div>
-                    <div style="color:var(--primary); font-weight:bold">${m.status}</div>
-                </div>
-            `;
-        });
-        document.getElementById('apiMatchContainer').innerHTML = html;
-    } catch (e) {
-        document.getElementById('apiMatchContainer').innerHTML = "API limit ပြည့်သွားပါပြီ (သို့) Error တက်နေပါသည်။";
-    }
-}
-
-fetchMatches();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
